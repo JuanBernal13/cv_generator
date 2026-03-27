@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.docx
+*.pdf
+generate_cv.py
+generate_cv_short.py
+generate_cv_swe.py
+generate_cv_ai.py
+juan_bernal_cv.py
+.gemini/
