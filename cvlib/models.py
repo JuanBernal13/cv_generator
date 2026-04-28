@@ -43,6 +43,37 @@ class SkillCategory:
 
 
 @dataclass
+class Achievement:
+    title: str
+    description: str
+    date: str
+
+
+@dataclass
+class Research:
+    title: str
+    description: str
+    date: str
+    link: str = ""
+
+
+@dataclass
+class CVLabels:
+    summary: str = "PROFESSIONAL SUMMARY"
+    experience: str = "PROFESSIONAL EXPERIENCE"
+    education: str = "EDUCATION"
+    projects: str = "KEY PROJECTS"
+    research: str = "RESEARCH"
+    skills: str = "TECHNICAL EXPERTISE"
+    achievements: str = "ACHIEVEMENTS & AWARDS"
+    tech_stack: str = "Tech Stack"
+    tech: str = "Tech"
+    coursework: str = "Relevant Coursework"
+    languages: str = "Languages"
+    link: str = "link"
+
+
+@dataclass
 class CVData:
     full_name: str
     headline: str
@@ -52,4 +83,7 @@ class CVData:
     education: list[Education] = field(default_factory=list)
     projects: list[Project] = field(default_factory=list)
     skills: list[SkillCategory] = field(default_factory=list)
+    research: list[Research] = field(default_factory=list)
+    achievements: list[Achievement] = field(default_factory=list)
     languages: str = ""
+    labels: CVLabels = field(default_factory=CVLabels)

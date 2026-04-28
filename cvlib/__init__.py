@@ -1,4 +1,14 @@
-from .models import CVData, ContactInfo, Job, Education, Project, SkillCategory
+from .models import (
+    Achievement,
+    ContactInfo,
+    CVLabels,
+    CVData,
+    Education,
+    Job,
+    Project,
+    Research,
+    SkillCategory,
+)
 from .renderer import render
 from .exporter import save_docx, save_pdf
 

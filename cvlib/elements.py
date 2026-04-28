@@ -117,10 +117,10 @@ def add_job_header(
     d.runs[0].font.color.rgb = COLORS.GRAY
 
 
-def add_tech_stack(doc: Document, tech: str) -> None:
+def add_tech_stack(doc: Document, tech: str, label: str = "Tech Stack") -> None:
     add_labeled_line(
         doc,
-        "Tech Stack: ",
+        f"{label}: ",
         tech,
         value_italic=True,
         space_before=SPACING.TECH_BEFORE,
@@ -136,6 +136,7 @@ def add_education_entry(
     dates: str,
     gpa: str = "",
     coursework: list[str] = None,
+    coursework_label: str = "Relevant Coursework",
 ) -> None:
     p = doc.add_paragraph()
     p.paragraph_format.space_after = SPACING.ITEM_AFTER
@@ -155,7 +156,7 @@ def add_education_entry(
         cw = doc.add_paragraph()
         cw.paragraph_format.space_after = SPACING.BLOCK_AFTER
         cw.paragraph_format.left_indent = BULLET_INDENT
-        r = cw.add_run("Relevant Coursework: ")
+        r = cw.add_run(f"{coursework_label}: ")
         r.font.bold = True
         r.font.size = FONT_SIZES.SMALL
         r.font.color.rgb = COLORS.GRAY
@@ -198,6 +199,8 @@ def add_project_entry(
     description: str,
     tech: str,
     link: str = "",
+    tech_label: str = "Tech",
+    link_label: str = "link",
 ) -> None:
     p = doc.add_paragraph()
     p.paragraph_format.space_before = SPACING.ITEM_AFTER
@@ -208,16 +211,62 @@ def add_project_entry(
     if link:
         r = p.add_run(" [")
         r.font.size = FONT_SIZES.SMALL
-        _add_hyperlink(p, link, "link", COLORS.BLUE, FONT_SIZES.SMALL)
+        _add_hyperlink(p, link, link_label, COLORS.BLUE, FONT_SIZES.SMALL)
         r = p.add_run("]")
         r.font.size = FONT_SIZES.SMALL
     r = p.add_run(f" -- {description}")
     r.font.size = FONT_SIZES.BODY
 
-    t = doc.add_paragraph(f"Tech: {tech}")
+    t = doc.add_paragraph(f"{tech_label}: {tech}")
     t.paragraph_format.space_after = SPACING.BLOCK_AFTER
     t.paragraph_format.left_indent = BULLET_INDENT
     t.runs[0].font.size = FONT_SIZES.SMALL
     t.runs[0].font.italic = True
     t.runs[0].font.color.rgb = COLORS.GRAY
 
+
+def add_titled_entry(
+    doc: Document,
+    title: str,
+    description: str,
+    date: str,
+    link: str = "",
+    link_label: str = "link",
+) -> None:
+    p = doc.add_paragraph()
+    p.paragraph_format.space_before = SPACING.ITEM_BEFORE
+    p.paragraph_format.space_after = SPACING.ITEM_AFTER
+    p.paragraph_format.left_indent = BULLET_INDENT
+    
+    r = p.add_run(title)
+    r.font.bold = True
+    r.font.size = FONT_SIZES.BODY
+
+    if link:
+        r = p.add_run(" [")
+        r.font.size = FONT_SIZES.SMALL
+        _add_hyperlink(p, link, link_label, COLORS.BLUE, FONT_SIZES.SMALL)
+        r = p.add_run("]")
+        r.font.size = FONT_SIZES.SMALL
+    
+    if date:
+        r = p.add_run(f" - {date}")
+        r.font.size = FONT_SIZES.BODY
+        r.font.italic = True
+        r.font.color.rgb = COLORS.GRAY
+    
+    if description:
+        p2 = doc.add_paragraph(description)
+        p2.paragraph_format.left_indent = BULLET_INDENT
+        p2.paragraph_format.space_after = SPACING.BLOCK_AFTER
+        for run in p2.runs:
+            run.font.size = FONT_SIZES.BODY
+
+
+def add_achievement_entry(
+    doc: Document,
+    title: str,
+    description: str,
+    date: str,
+) -> None:
+    add_titled_entry(doc, title, description, date)
